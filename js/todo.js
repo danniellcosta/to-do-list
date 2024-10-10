@@ -33,12 +33,12 @@ function carregarTarefas() {
                          tarefa.status === "a fazer" ? "#8E2D2B" : "#fff"
                        }; padding:0 5px;">
                 <input type="button" value="fazendo" onclick="mudarStatus(${index}, 'fazendo')" 
-                       style="border:1px solid #8E2D2B; border-radius: 5px; background: ${
-                         tarefa.status === "fazendo" ? "#8E2D2B" : "#fff"
+                       style="border:1px solid #FFD049; border-radius: 5px; background: ${
+                         tarefa.status === "fazendo" ? "#FFD049" : "#fff"
                        }; padding:0 5px;">
                 <input type="button" value="finalizado" onclick="mudarStatus(${index}, 'finalizado')" 
-                       style="border:1px solid #8E2D2B; border-radius: 5px; background: ${
-                         tarefa.status === "finalizado" ? "#8E2D2B" : "#fff"
+                       style="border:1px solid #05BC45; border-radius: 5px; background: ${
+                         tarefa.status === "finalizado" ? "#05BC45" : "#fff"
                        }; padding:0 5px;">
               </div>
             </div>

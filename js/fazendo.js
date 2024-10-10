@@ -14,7 +14,7 @@ function carregarTarefas() {
   // Pega as tarefas do Local Storage
   const tarefasOngoing = JSON.parse(localStorage.getItem("tarefasOngoing")) || [];
 
-  tituloCard.innerText = `Tarefas a fazer | ${tarefasOngoing.length }`;
+  tituloCard.innerText = `Tarefa Sendo Feitas | ${tarefasOngoing.length }`;
 
   if (tarefasOngoing.length === 0) {
     listaTarefas.innerHTML = "<p>Não há tarefas no momento.</p>";
@@ -30,15 +30,15 @@ function carregarTarefas() {
                 <p class="card-text">${tarefa.descricao || ""}</p>
                 <input type="button" value="a fazer" onclick="mudarStatus(${index}, 'a fazer')" 
                        style="border:1px solid #; border-radius: 5px; background: ${
-                         tarefa.status === "a fazer" ? "#FFD049" : "#fff"
+                         tarefa.status === "a fazer" ? "#8E2D2B" : "#fff"
                        }; padding:0 5px;">
                 <input type="button" value="fazendo" onclick="mudarStatus(${index}, 'fazendo')" 
                        style="border:1px solid #FFD049; border-radius: 5px; background: ${
                          tarefa.status === "fazendo" ? "#FFD049" : "#fff"
                        }; padding:0 5px;">
                 <input type="button" value="finalizado" onclick="mudarStatus(${index}, 'finalizado')" 
-                       style="border:1px solid #FFD049; border-radius: 5px; background: ${
-                         tarefa.status === "finalizado" ? "#FFD049" : "#fff"
+                       style="border:1px solid #05BC45; border-radius: 5px; background: ${
+                         tarefa.status === "finalizado" ? "#05BC45" : "#fff"
                        }; padding:0 5px;">
               </div>
             </div>
@@ -60,7 +60,7 @@ function adicionar() {
     tarefasOngoing.push({
       nome: nomeTarefa,
       descricao: "", // Pode ser um campo de descrição futura
-      status: "a fazer",
+      status: "Fazendo",
     });
 
     // Salva as tarefas atualizadas no Local Storage

@@ -56,8 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.classList.add("list-group-item");
       li.classList.add("bg-dark");
-      li.classList.add("text-white")
-      li.classList.add("rounded")
+      li.classList.add("text-white");
+      li.classList.add("rounded");
+      li.classList.add("m-1");
       li.textContent = `${task.nome}`;
       taskList.appendChild(li);
     });
@@ -87,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
         li.classList.add("bg-dark");
         li.classList.add("text-white")
         li.classList.add("rounded")
+        li.classList.add("m-1");
         li.textContent = `${task.nome}`;
         taskList.appendChild(li);
       });
@@ -118,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       li.classList.add("bg-dark");
       li.classList.add("text-white")
       li.classList.add("rounded")
+      li.classList.add("m-1");
       li.textContent = `${task.nome}`;
       taskList.appendChild(li);
     });

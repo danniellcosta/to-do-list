@@ -1,0 +1,11 @@
+.gerenc-tarefas{
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.gerenc-tarefas:hover{
+    color: #fff;
+    background-color: #000;
+}

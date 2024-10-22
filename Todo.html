@@ -34,7 +34,7 @@
         </ul>
        <form class="d-flex" style="width: 500px;" role="search" onsubmit="event.preventDefault(); adicionar();">
   <input id="add" class="form-control me-2 w-100" type="search" placeholder="Digite a tarefa que deseja adicionar" aria-label="Search">
-  <button class="btn btn-outline-dark" type="submit">Adicionar</button>
+  <button id="btn-action" class="btn btn-outline-dark" type="submit">Adicionar</button>
 </form>
       </div>
     </div>
@@ -52,8 +52,8 @@
         </div>
       </div>
     </div>
-    <div class="card-footer text-body-secondary">
-      Last Update 2 days ago
+    <div class="my-2 card-footer text-body-secondary">
+      <span id="num">Sem Atualizações</span> 
     </div>
   </div>
 </body>

@@ -42,10 +42,10 @@ function login() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const taskList = document.getElementById("lista");
+  const taskList = document.getElementById("task-list");
 
   // Obtém as tarefas do Local Storage
-  const tasks = JSON.parse(localStorage.getItem("tarefasToDo")) || [];
+  const tasks = JSON.parse(localStorage.getItem("tarefasTodo")) || [];
 
   // Limpa o conteúdo do card
   taskList.innerHTML = "";
@@ -71,36 +71,37 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const taskList = document.getElementById("task-list");
-  
-    // Obtém as tarefas do Local Storage
-    const tasks = JSON.parse(localStorage.getItem("tarefasToDo")) || [];
-  
-    // Limpa o conteúdo do card
-    taskList.innerHTML = "";
-  
-    // Se existirem tarefas, as exibe
-    if (tasks.length > 0) {
-      tasks.forEach((task) => {
-        const li = document.createElement("li");
-        li.classList.add("list-group-item");
-        li.classList.add("bg-dark");
-        li.classList.add("text-white")
-        li.classList.add("rounded")
-        li.classList.add("m-1");
-        li.textContent = `${task.nome}`;
-        taskList.appendChild(li);
-      });
-    } else {
-      // Se não houver tarefas, exibe uma mensagem padrão
-      const li = document.createElement("li");
-      li.classList.add("list-group-item");
-      li.textContent = "Não há tarefas de momento";
-      taskList.appendChild(li);
-    }
-  });
 
+
+  // Função para atualizar o status de uma tarefa
+function updateTaskStatus(taskName, newStatus) {
+  // Pega todas as tarefas de todos os status
+  let tarefasToDo = JSON.parse(localStorage.getItem("tarefasToDo")) || [];
+  let tarefasOngoing = JSON.parse(localStorage.getItem("tarefasOngoing")) || [];
+  let tarefasDone = JSON.parse(localStorage.getItem("tarefasDone")) || [];
+
+  // Remove a tarefa de qualquer lista em que ela esteja
+  tarefasToDo = tarefasToDo.filter(task => task.nome !== taskName);
+  tarefasOngoing = tarefasOngoing.filter(task => task.nome !== taskName);
+  tarefasDone = tarefasDone.filter(task => task.nome !== taskName);
+
+  // Adiciona a tarefa na lista correspondente ao novo status
+  if (newStatus === "ToDo") {
+    tarefasToDo.push({ nome: taskName });
+  } else if (newStatus === "Ongoing") {
+    tarefasOngoing.push({ nome: taskName });
+  } else if (newStatus === "Done") {
+    tarefasDone.push({ nome: taskName });
+  }
+
+  // Atualiza o LocalStorage
+  localStorage.setItem("tarefasToDo", JSON.stringify(tarefasToDo));
+  localStorage.setItem("tarefasOngoing", JSON.stringify(tarefasOngoing));
+  localStorage.setItem("tarefasDone", JSON.stringify(tarefasDone));
+
+  // Atualiza a exibição na página principal
+  location.reload(); // Recarrega a página principal para refletir as mudanças
+}
 
   
 document.addEventListener("DOMContentLoaded", () => {
@@ -149,8 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.classList.add("list-group-item");
       li.classList.add("bg-dark");
-      li.classList.add("text-white")
-      li.classList.add("rounded")
+      li.classList.add("text-white");
+      li.classList.add("rounded");
+      li.classList.add("m-1");
       li.textContent = `${task.nome}`;
       taskList.appendChild(li);
     });

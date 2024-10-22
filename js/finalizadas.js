@@ -1,9 +1,28 @@
-function excluir(event) {
-  const card = event.target.closest(".col");
-  card.remove();
+document.addEventListener("DOMContentLoaded", carregarTarefas);
+
+function tempo(date) {
+  const segundos = Math.floor((new Date() - date) / 1000);
+  let intervalo = Math.floor(segundos / 3600);
+
+  if (intervalo >= 1) {
+    return intervalo + " hora(s) atrás";
+  }
+  intervalo = Math.floor(segundos / 60);
+  if (intervalo >= 1) {
+    return intervalo + " minuto(s) atrás";
+  }
+  return segundos + " segundo(s) atrás";
 }
 
-document.addEventListener("DOMContentLoaded", carregarTarefas);
+function updateLastAction() {
+  const now = new Date();
+  localStorage.setItem('lastActionFinalizado', now); 
+  document.getElementById('lastUpdate').innerText = "Última atualização: " + tempo(now);
+}
+
+document.getElementById('btn-action').addEventListener('click', function() {
+  updateLastAction();
+});
 
 // Função para carregar as tarefas da página
 function carregarTarefas() {
@@ -11,15 +30,18 @@ function carregarTarefas() {
   const tituloCard = document.getElementById("card-header");
   listaTarefas.innerHTML = "";
 
-  // Pega as tarefas do Local Storage
   const tarefasDone = JSON.parse(localStorage.getItem("tarefasDone")) || [];
+  const lastAction = localStorage.getItem('lastActionFinalizado');
+
+  if (lastAction) {
+    document.getElementById('num').innerText = "Última atualização: " + tempo(new Date(lastAction));
+  }
 
   tituloCard.innerText = `Tarefas Finalizadas | ${tarefasDone.length }`;
 
   if (tarefasDone.length === 0) {
     listaTarefas.innerHTML = "<p>Não há tarefas no momento.</p>";
   } else {
-    // Cria os cards para cada tarefa
     tarefasDone.forEach((tarefa, index) => {
       const card = `
           <div class="col">
@@ -29,7 +51,7 @@ function carregarTarefas() {
                 <h5 class="card-title">${tarefa.nome}</h5>
                 <p class="card-text">${tarefa.descricao || ""}</p>
                 <input type="button" value="a fazer" onclick="mudarStatus(${index}, 'a fazer')" 
-                       style="border:1px solid #; border-radius: 5px; background: ${
+                       style="border:1px solid #8E2D2B; border-radius: 5px; background: ${
                          tarefa.status === "a fazer" ? "#8E2D2B" : "#fff"
                        }; padding:0 5px;">
                 <input type="button" value="fazendo" onclick="mudarStatus(${index}, 'fazendo')" 
@@ -47,57 +69,57 @@ function carregarTarefas() {
     });
   }
 }
+
 // Função para adicionar nova tarefa
 function adicionar() {
   const inputTarefa = document.getElementById("add");
   const nomeTarefa = inputTarefa.value.trim();
 
   if (nomeTarefa) {
-    // Pega as tarefas existentes do Local Storage
     const tarefasDone = JSON.parse(localStorage.getItem("tarefasDone")) || [];
 
-    // Adiciona a nova tarefa
     tarefasDone.push({
       nome: nomeTarefa,
-      descricao: "", // Pode ser um campo de descrição futura
-      status: "Finalizada",
+      descricao: "", 
+      status: "fazendo",
     });
 
-    // Salva as tarefas atualizadas no Local Storage
     localStorage.setItem("tarefasDone", JSON.stringify(tarefasDone));
-
-    // Limpa o campo de input
     inputTarefa.value = "";
-
-    // Recarrega a lista de tarefas
     carregarTarefas();
   } else {
     alert("Por favor, digite uma tarefa.");
   }
 }
 
+
 // Função para excluir tarefa
 function excluir(index) {
   let tarefasDone = JSON.parse(localStorage.getItem("tarefasDone")) || [];
-
   tarefasDone.splice(index, 1);
-
-  // Atualiza o Local Storage
   localStorage.setItem("tarefasDone", JSON.stringify(tarefasDone));
-
-  // Recarrega a lista de tarefas
   carregarTarefas();
 }
 
 // Função para mudar o status da tarefa
 function mudarStatus(index, novoStatus) {
   let tarefasDone = JSON.parse(localStorage.getItem("tarefasDone")) || [];
+  const tarefa = tarefasDone[index];
 
-  tarefasDone[index].status = novoStatus;
+  tarefasDone.splice(index, 1); // Remove a tarefa da lista "Finalizadas"
 
-  // Atualiza o Local Storage
-  localStorage.setItem("tarefasDone", JSON.stringify(tarefasDone));
+  if (novoStatus === "a fazer") {
+    let tarefasTodo = JSON.parse(localStorage.getItem("tarefasToDo")) || [];
+    tarefa.status = "a fazer";
+    tarefasTodo.push(tarefa);
+    localStorage.setItem("tarefasTodo", JSON.stringify(tarefasTodo)); // Adiciona na lista "A Fazer"
+  } else if (novoStatus === "fazendo") {
+    let tarefasOngoing = JSON.parse(localStorage.getItem("tarefasOngoing")) || [];
+    tarefa.status = "fazendo";
+    tarefasOngoing.push(tarefa);
+    localStorage.setItem("tarefasOngoing", JSON.stringify(tarefasOngoing)); // Adiciona na lista "Sendo Feitas"
+  }
 
-  // Recarrega a lista de tarefas
+  localStorage.setItem("tarefasDone", JSON.stringify(tarefasDone)); // Atualiza a lista "Finalizadas"
   carregarTarefas();
 }

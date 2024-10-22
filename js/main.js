@@ -5,6 +5,23 @@ function register() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
+  if (username.length < 3){
+    alert("o nome de usuário deve ter pelo menos 3 caractéres!");
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!emailRegex.test(email)){
+    errorMessage.textContent = "Por favor, insira um e-mail válido";
+    return false;
+  }
+
+  const passwordRegex = /^(?=.*\d).{5,}$/;
+  if (!passwordRegex.test(password)){
+    alert("A senha deve ter pelo menos 5 caracteres e incluir ao menos um número.");
+    return false;
+    }
+
   if (username && email && password) {
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const userExists = users.some(

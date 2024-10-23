@@ -81,7 +81,7 @@ function adicionar() {
     tarefasDone.push({
       nome: nomeTarefa,
       descricao: "", 
-      status: "fazendo",
+      status: "finalizado",
     });
 
     localStorage.setItem("tarefasDone", JSON.stringify(tarefasDone));

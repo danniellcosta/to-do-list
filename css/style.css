@@ -9,3 +9,30 @@
     color: #fff;
     background-color: #000;
 }
+
+.form{
+    width: 500px;
+    display: flex;
+}
+
+@media screen and (max-width: 720px)  {
+
+    .form{
+        display:block;
+    }
+
+    .add{
+        max-width: 60%; 
+    }
+
+    .btn-add{
+        margin: 8px;
+        
+        
+    }
+
+    .dropdown-class{
+        width: 50%;
+
+    }
+}

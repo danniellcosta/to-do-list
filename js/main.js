@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Se não houver tarefas, exibe uma mensagem padrão
     const li = document.createElement("li");
     li.classList.add("list-group-item");
-    li.textContent = "Não há tarefas de momento";
+    li.textContent = "Não há tarefas no momento";
     taskList.appendChild(li);
   }
 });
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Se não houver tarefas, exibe uma mensagem padrão
     const li = document.createElement("li");
     li.classList.add("list-group-item");
-    li.textContent = "Não há tarefas de momento";
+    li.textContent = "Não há tarefas no momento";
     taskList.appendChild(li);
   }
 });
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Se não houver tarefas, exibe uma mensagem padrão
     const li = document.createElement("li");
     li.classList.add("list-group-item");
-    li.textContent = "Não há tarefas de momento";
+    li.textContent = "Não há tarefas no momento";
     taskList.appendChild(li);
   }
 });
